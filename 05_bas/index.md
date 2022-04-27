@@ -9,7 +9,7 @@ BASを導入します。
     oc login OpenShift_URL:port
     ```
 
-### 1. https://developer.ibm.com/openlabsdev/ui/behavior-analytics-services にアクセス
+### 1. https://developer.ibm.com/openlabs/behavior-analytics-services にアクセス
 
 ### 2. LaunchLabをクリック
 ![](LaunchLab.png)
