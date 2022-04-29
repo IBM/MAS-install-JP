@@ -32,7 +32,7 @@ Red Hat OpenShift on IBM Cloud 環境を [Techzone](https://techzone.ibm.com/) �
    | **NFS Size**            | 2 TB                                           |
    | **OpenShift Version**   | 4.8 (MAS 8.7の場合)                        |
 
-   ![](2022-04-21-10-48-48.png)
+   ![](2022-04-27-11-29-40.png)
    ![](2022-04-20-08-30-27.png)
 
 6. IBM Cloud より ITZ - V2 アカウントへの招待メールが届くので参加

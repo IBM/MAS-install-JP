@@ -1,6 +1,12 @@
 
 ## 5.Behaviour Analytics Service (BAS)　のインストール
-BASを導入します。
+BASを導入します。BASについてのFAQはこちらに記載されています。
+
+https://developer.ibm.com/openlabs/mock/support/faq
+
+BASについて問い合わせが必要な場合、上記の「Support」-「Contact US」からメールにて問い合わせることができます。
+
+![](2022-04-21-09-02-19.png)
 
 ※当手順で導入しているBASのバージョンは [はじめに](../README.md#はじめに) に記載しています。
 
@@ -54,8 +60,7 @@ imagePullSecret=bas-images-pull-secret
 
 インストールが終了すると画面にURLが表示されるので控えておきます。
 
-補足.BASについて問い合わせが必要な場合、「Support」-「Contact US」からメールにて問い合わせることができます。
-![](2022-04-21-09-02-19.png)
+
 
 
 
