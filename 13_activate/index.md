@@ -77,7 +77,7 @@ https://www.ibm.com/docs/en/maximo-manage/8.3.0?topic=suite-deployment-overview
 * アップグレードバージョンチェックをバイパス: このアクティブ化が初回の場合チェック不要
 </InlineNotification>
 
-	![](2022-04-03-14-38-13.png)
+![](2022-04-03-14-38-13.png)
 
 
 ### 5.追加言語
