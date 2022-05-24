@@ -144,6 +144,12 @@ Ansibleのスキルをお持ちの方は以下を利用してMASのインスト�
 * その他リンク集
 
 	https://ibm.box.com/s/82ypn8va3yi37sz8jw1c01vmh2vcwmgt
-	
+
+* 参考サイト
+  
+    Maximo Programming
+
+	https://maximopro.tumblr.com/
+
 	### 次項
   [01_事前準備](../main/01_prereqs/index.md)

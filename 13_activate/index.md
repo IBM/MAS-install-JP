@@ -74,10 +74,13 @@ https://www.ibm.com/docs/en/maximo-manage/8.3.0?topic=suite-deployment-overview
 
 * (英語以外の言語を使用する場合)Db2 Vargraphicをチェックする
 
-* アップグレードバージョンチェックをバイパス: このアクティブ化が初回の場合チェック不要
+* アップグレードバージョンチェックをバイパス: 通常はチェック不要。データベースへのネットワーク接続などが原因でアクティブ化が失敗した際のトラブルシューティングで利用する場合がある。詳細は以下参照。
+  
+  参考.Troubleshooting database deployment
+  https://www.ibm.com/docs/en/maximo-manage/8.3.0?topic=database-troubleshooting-deployment
 </InlineNotification>
 
-	![](2022-04-03-14-38-13.png)
+![](2022-04-03-14-38-13.png)
 
 
 ### 5.追加言語
