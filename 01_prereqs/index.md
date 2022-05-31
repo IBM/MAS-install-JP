@@ -1,5 +1,7 @@
 ## 1.事前準備
 
+※Windows環境の場合はWSLなどのLinux環境の導入が必要となり、シェルコマンドはLinux環境から実行することになります。WSLの導入手順については[こちら](https://docs.microsoft.com/ja-jp/windows/wsl/setup/environment)を参照。
+
 ### 1.Techzone ROKS 環境作成手順 - MAS 8.7
 
 Red Hat OpenShift on IBM Cloud 環境を [Techzone](https://techzone.ibm.com/) から作成します。
@@ -113,7 +115,7 @@ To see the full list of commands supported, run 'oc --help'.
 ### 4.cfsslコマンドのインストール
 BASのインストールで利用するコマンドを導入します。
 
-Macの場合のインストールコマンドの例:
+Macの場合のインストールコマンドの例:　※WSL(Linux)の場合はaptなどを使用してインストール
 ```bash
 brew install cfssl
 ```
@@ -140,7 +142,7 @@ git version 2.32.0 (Apple Git-132)
 ```
 
 ### 6.Javaの導入
-Java 8以上を導入します。各端末の環境に準じた手順を実施します。
+Java 8以上を導入します。各端末の環境に準じた手順を実施します。　※Windows環境の場合はWSLなどのLinux環境にJavaを導入してください。
 
 ### 7.IBM IDの取得
 以下のサイトからIBM IDを取得します。
