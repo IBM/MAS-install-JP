@@ -16,6 +16,7 @@
 - [11_Manage Operatorのデプロイ](11_manageop/index.md)
 - [12_永続ボリュームの作成](12_pvc/index.md)
 - [13_Manageのアクティブ化](13_activate/index.md)
+- [FAQ](90_faq/index.md)
 - [参考.用語解説](99_yougo/index.md)
 ## はじめに
 本資料は、IBM Maximo Application Suite(MAS) 8.7 を Red Hat OpenShift on IBM Cloud (ROKS)上へ導入し、MAS Manage 8.3 のデプロイを行う手順書です。IBM Cloud 上に テストやPoC利用を目的とした MAS Manage の最小構成の環境構築することを想定しております。												
