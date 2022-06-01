@@ -5,7 +5,7 @@ Cloud Pak For Dataのインストール手順について記載します。<br /
 参考. Cloud Pak For Data のインストール手順 (https://www.ibm.com/docs/en/cloud-paks/cp-data/4.0?topic=installing )
 
 ### 手順前提
-当手順では Intel MacOS 12.2 にて実施
+当手順では Intel MacOS 12.2 にて実施　※WSL2(Ubuntu 20.04.4 LTS)でも動作確認済
 
 1. python3の導入
 
@@ -28,7 +28,7 @@ Cloud Pak For Dataのインストール手順について記載します。<br /
 
     https://github.com/IBM/cloud-pak-cli/ からパッケージをダウンロードし、cloudctl として /usr/local/bin に配置
 
-    MacOSの場合、以下のコマンドにより取得
+    MacOSの場合、以下のコマンドにより取得　※WSL(Linux)の場合は上記リンク内のLinux x86-architectureを参照
 
     ```bash
     curl -L https://github.com/IBM/cloud-pak-cli/releases/latest/download/cloudctl-darwin-amd64.tar.gz -o cloudctl-darwin-amd64.tar.gz
