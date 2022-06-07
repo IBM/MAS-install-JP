@@ -16,6 +16,7 @@
 - [11_Manage Operatorのデプロイ](11_manageop/index.md)
 - [12_永続ボリュームの作成](12_pvc/index.md)
 - [13_Manageのアクティブ化](13_activate/index.md)
+- [14_添付ファイルダウンロードの設定](14_attach/index.md)
 - [FAQ](90_faq/index.md)
 - [参考.用語解説](99_yougo/index.md)
 ## はじめに
@@ -114,6 +115,7 @@ MASおよびManageについて、構築の大きな流れは以下の通りで�
 11_Manage Operatorのデプロイ  | 30分
 12_永続ボリュームの作成  | 15分
 13_Manageのアクティブ化  | 2時間〜
+14_添付ファイルダウンロードの設定  | 30分
 
 ## 参考リンク
 * インストール手順のビデオ
