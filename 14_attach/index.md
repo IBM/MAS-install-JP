@@ -22,12 +22,13 @@ mxe.doclink.doctypes.topLevelPathsを探して、グローバル値に/mnt/docli
 プロパティの保存を押下  
 ![](2022-06-07-12-22-10.png)
 
-CLIからPodを再起動
+CLIからPodを再起動  
+※サーババンドルの構成で指定したPod数分を再起動してください。以下は本手順に従って構築した場合のコマンドです。(サーバーバンドルの指定については「13.MANAGE アクティブ化 - サーバー・バンドル」を参照)
 ```
 oc scale deployment mas87infra-masinfratest-uibundle -n mas-mas87infra-manage --replicas=0
 oc scale deployment mas87infra-masinfratest-uibundle -n mas-mas87infra-manage --replicas=2
 ```
-※Pod名については、OpenShift Webコンソール > ワークロード > Podにて、プロジェクト:mas-mas87infra-manageのmas87infra-masinfratestでフィルターして確認。名前にuibundleを含むPod。 (下のOpenShift Webコンソールのキャプチャも参照)
+※Pod名については、OpenShift Webコンソール > ワークロード > Podにて、プロジェクト:mas-mas87infra-manageのmas87infra-masinfratestでフィルターして確認。本手順に従って構築した場合は、名前にuibundleを含むPod名が該当します。サーババンドルでタイプにallを指定した場合は、allを含むPod名が該当します。 (下のOpenShift Webコンソールのキャプチャも参照)
 ![](2022-06-07-12-22-57.png)
 
 OpenShift Webコンソールより、Podの再起動が完了したことを確認。ステータスがRunning、準備状態が2/2になったらPodの再起動は完了している。
