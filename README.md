@@ -17,6 +17,7 @@
 - [12_永続ボリュームの作成](12_pvc/index.md)
 - [13_Manageのアクティブ化](13_activate/index.md)
 - [14_添付ファイルダウンロードの設定](14_attach/index.md)
+- [50_参考.SQLクライアントの接続](50_dbclient/index.md)
 - [FAQ](90_faq/index.md)
 - [参考.用語解説](99_yougo/index.md)
 ## はじめに
