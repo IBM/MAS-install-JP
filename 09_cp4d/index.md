@@ -474,39 +474,44 @@ ibm-db2wh-cp4d-operator-catalog
 OK
 ```
 
-## CloudPak for Data 4.0 オペレーターのインストール
+## ~~CloudPak for Data 4.0 オペレーターのインストール~~
 
-1. CloudPak for Data 4.0 オペレーターを Openshift の OperatorHub からインストールする
-OperatorHubで「Cloud Pak for Data Platform Operator」を見つけ、インストールをクリック
+(2022/7/14訂正) CP4D側の変更により、下記手順では動作しないことを確認したため、以下手順に則り、cp4dの導入を完了ください。
+
+Installing IBM Cloud Pak for Data
+https://www.ibm.com/docs/en/cloud-paks/cp-data/4.0?topic=installing#install__op-subs
+
+~~1. CloudPak for Data 4.0 オペレーターを Openshift の OperatorHub からインストールする
+OperatorHubで「Cloud Pak for Data Platform Operator」を見つけ、インストールをクリック~~
 ![](2022-04-02-19-16-22.png)
 
-2. namespace: ibm-common-service を選択し、「インストール」をクリック
+~~2. namespace: ibm-common-service を選択し、「インストール」をクリック~~
 ![](2022-04-02-19-17-45.png)
 
 
-数分経つと、Operatorが「インストールされた Operator」に表示されるようになります
+~~数分経つと、Operatorが「インストールされた Operator」に表示されるようになります~~
 ![](2022-04-02-19-18-44.png)
 
-## CloudPak for Data 4.0 のインスタンスの作成
-1. 「インストールされた Operator」から 「Cloud Pak for Data Platform Operator」を開き、「インスタンスの作成」をクリック
+## ~~CloudPak for Data 4.0 のインスタンスの作成~~
+~~1. 「インストールされた Operator」から 「Cloud Pak for Data Platform Operator」を開き、「インスタンスの作成」をクリック~~
 ![](2022-04-02-19-20-48.png)
 
-2. 名前を指定し(当手順ではibmcpd-mas)、Licenseを「Standard」を指定、「Accept license」をtrueにします
+~~2. 名前を指定し(当手順ではibmcpd-mas)、Licenseを「Standard」を指定、「Accept license」をtrueにします~~
 ![](2022-04-02-19-23-12.png)
 
-3. 「YAML ビュー」をj開き、必要に応じストレージクラスを指定
+~~3. 「YAML ビュー」をj開き、必要に応じストレージクラスを指定~~
 
-Cloud pak for data のコントロールプレーンで利用可能なストレージクラスは以下を参照ください。
+~~Cloud pak for data のコントロールプレーンで利用可能なストレージクラスは以下を参照ください。~~
 
 参考. https://www.ibm.com/docs/en/cloud-paks/cp-data/4.0?topic=installing-cloud-pak-data
 
 ![](2022-04-02-19-25-11.png)
 
-4. 「作成」をクリック
+~~4. 「作成」をクリック~~
 
 ![](2022-04-02-19-35-10.png)
 
-5. 作成されたインスタンスの確認
+~~5. 作成されたインスタンスの確認~~
 
  「Condition : Running」になります。
 次の手順のダッシュボードへのアクセスが可能になるまでに、40-60分程度かかる場合があります。
