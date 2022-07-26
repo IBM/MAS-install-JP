@@ -103,6 +103,29 @@ reportbundle | report(レポート)
 
 ![](2022-04-03-14-44-04.png)
 
+### (補足) サーバー・バンドルのJVMオプションの設定
+
+Manageのベース言語をJAとしている場合、podのログの文字化け回避のため、エンコードの設定を修正する
+
+すべてのサーバー・バンドルのバンドル・レベルのプロパティーで以下を設定
+* 名前:jvmOptions
+* 値:-Dfile.encoding=UTF-8
+
+![](2022-07-27-08-18-45.png)
+
+jvmOptionsはアクティベート後の修正も可能です。詳細は以下を参照ください。
+
+参考.JVM Options Configuration
+
+ https://www.ibm.com/docs/ja/maximo-manage/8.2.0?topic=application-configuring-jvm-options
+
+
+参考.Maximo Manage 8でログやファイル名が文字化けする場合の対応方法
+
+ https://maximopro.tumblr.com/post/680770947831169024/maximo-manage-8%E3%81%A7%E3%83%AD%E3%82%B0%E3%82%84%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%8C%E6%96%87%E5%AD%97%E5%8C%96%E3%81%91%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%BF%9C%E6%96%B9%E6%B3%95
+
+
+
 ### 7.永続ボリュームの要求(PVC)
 システムで管理をOFFにし、以下の4つを設定
 
