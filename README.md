@@ -1,149 +1,133 @@
-# Maximo Application Suite 8.7/Manage8.3の導入手順書
+# Maximo Application Suite 8.8/Manage8.4の導入手順書
 
 ## 目次
 - [はじめに](#はじめに)
 - [00_構成と前提](00_architecture/index.md)
 - [01_事前準備](01_prereqs/index.md)
-- [02_IBM Operator Catalog の追加](02_isc/index.md)
-- [03_Service Binding Operator(SBO) のインストール](03_sbo/index.md)
-- [04_Cert Managermentのインストール](04_cm/index.md)
-- [05_Behaviour Analytics Service (BAS) のインストール](05_bas/index.md)
-- [06_MongoDB のインストール](06_mongo/index.md)
-- [07_IBM Suite License Service (SLS) のインストール](07_sls/index.md)
-- [08_Maximo Application Suite(MAS) のインストール](08_mas_core/index.md)
-- [09_IBM CloudPak for Data (CP4D) のインストール](09_cp4d/index.md)
-- [10_DB2warehouseのインストールと構成](10_db2/index.md)
-- [11_Manage Operatorのデプロイ](11_manageop/index.md)
-- [12_永続ボリュームの作成](12_pvc/index.md)
-- [13_Manageのアクティブ化](13_activate/index.md)
-- [14_添付ファイルダウンロードの設定](14_attach/index.md)
-- [50_参考.SQLクライアントの接続](50_dbclient/index.md)
+- [02_MASインストール前準備](02_preparation/index.md)
+- [03_MASインストール](03_masinstall/index.md)
+- [04_管理者ユーザーの作成](04_maxadmin/index.md)
+- [05_導入後環境の確認](05_confirm/index.md)
+- [11_参考.Manageの構成変更](11_reactivate/index.md)
+- [50_補足.SQLクライアントの接続](50_dbclient/index.md)
+- [51_補足.DB2インスタンスへのアクセス](51_dbinstance/index.md)
 - [FAQ](90_faq/index.md)
 - [参考.用語解説](99_yougo/index.md)
 ## はじめに
-本資料は、IBM Maximo Application Suite(MAS) 8.7 を Red Hat OpenShift on IBM Cloud (ROKS)上へ導入し、MAS Manage 8.3 のデプロイを行う手順書です。IBM Cloud 上に テストやPoC利用を目的とした MAS Manage の最小構成の環境構築することを想定しております。												
+本資料は、IBM Maximo Application Suite(MAS) 8.8 を Red Hat OpenShift on IBM Cloud (ROKS)上へ導入し、MAS Manage 8.4 のデプロイを行う手順書です。  
+IBM Cloud 上に テストやPoC利用を目的とした Health付きMAS Manage の最小構成の環境構築することを想定しております。
+
+
+当手順では、下記の「IBM Maximo Application Suite CLI Utility」を利用し、ansible collectionを利用して導入します。
+
+* IBM Maximo Application Suite CLI Utility
+  	
+	https://github.com/ibm-mas/cli
+
+* Ansible collection
+
+	https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-ansible-collection
+
+Maximo Application Suite の環境別の導入方法の詳細については以下を御覧ください。  
+MAS Manage のみ導入する場合も以下参照ください。
+
+* Supported installation paths
+
+    https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=suite-supported-installation-paths
+
 
 ## 注意事項
-- 当手順は2022年3月から4月にかけて、Maximo Application Suite 8.7/Manage8.3の構築・アクティベーションをTechzoneのROKS環境にて実施した際の作業ログをベースに記述しております。
+- 当手順は2022年8月に、Maximo Application Suite 8.8/Manage8.4の構築・アクティベーションをTechzoneのROKS環境にて実施した際の作業ログをベースに記述しております。
 - 本資料の記載内容は、正式な IBM のテストやレビューを受けておりません。内容について、できる限り正確を期すよう努めておりますが、いかなる明示または暗黙の保証も責任も負いかねます。
 - 本資料の情報は、使用先の責任において使用されるべきものであることを、あらかじめご了承ください
 - 掲載内容は不定期に変更されることもあります。他のメディア等に無断で転載する事はご遠慮ください。
 - 本資料の著作権は日本アイ・ビー・エムにあります。非営利目的の個人利用の場合において、自由に使用してもかまいませんが、営利目的の使用は禁止させていただきます。
 - 本資料は日本アイ・ビー・エム株式会社ならびに日本アイ・ビー・エム・システムズ・エンジニアリング株式会社の正式なレビューを受けておりません。当資料は正式なマニュアルをはじめとするドキュメントの補完資料として参照して下さい。
-- 本資料は、製品の特定バージョンを使ってテストをした結果をもとに記述しています。今後のバージョンおよびメンテナンスリリース、Feature Packなどの適用により動作が当資料に記述された内容とは異なってくる可能性があります のでご了承下さい。
+- 本資料は、製品の特定バージョンを使ってテストをした結果をもとに記述しています。今後のバージョンおよびメンテナンスリリース、Feature Packなどの適用により動作が当資料に記述された内容とは異なってくる可能性がありますのでご了承下さい。
 - 本資料は、「本資料にて導入する環境」記載の環境でのみ稼働確認を行っており、他の環境での動作確認は実施しておりません。
 　他の環境での手順につきましては、マニュアルを参照ください。
 - 構成によってはIBM Cloudの課金が発生することをご留意ください。
-- 公開対象はIBM Business Partner、IBM社員とさせていただきます。
 - step by stepの手順ではありません。前提知識を必要とします。
 - 資料中、以下の略称を使用する場合があります。
 
-| 略称       |  正式名称 |
-| ------------- | ----- |
-MAS  | IBM Maximo Application Suite
-ROKS  |  Red Hat OpenShift on IBM Cloud
-OCP  | OpenShift Container Platform
-BAS | Behavior Analytics Services
-SBO |  Service Binding Operator
-SLS  | Suite License Service
-CP4D  | IBM Cloud Pak for Data
-DB2WH  | IBM Db2 Warehouse
-Manage  | IBM Maximo Manage
+| 略称     | 正式名称                       |
+| -------- | ------------------------------ |
+| MAS      | IBM Maximo Application Suite   |
+| ROKS     | Red Hat OpenShift on IBM Cloud |
+| OCP      | OpenShift Container Platform   |
+| UDS      | IBM User Data Service          |
+| SLS      | Suite License Service          |
+| DB2      | IBM Db2                        |
+| Manage   | IBM Maximo Manage              |
+| Pipeline | Red Hat Openshift Pipelines    |
 
 ## 本資料にて導入する環境
 本資料にて利用する各種ソフトウェアバージョンは以下の通りです。
 
-| 略称       |  バージョン |
-| ------------- | ----- |
-Red Hat OpenShift  | 4.8
-Red Hat OpenShift CLI  |  4.8
-IBM Maximo Application Suite  | 8.7.0
-IBM Maximo Manage | 8.3.0
-BAS |  1.1.4
-SBO |  1.0.1
-SLS  | 3.3.1
-CP4D  | 4.0
-DB2WH  | 11.5.7
-Manage  | 8.3
 
-## 参考.IBM Maximo Application Suite 8.7 前提ソフトウェア
-https://www.ibm.com/software/reports/compatibility/clarity-reports/report/html/prereqsForProduct?deliverableId=956BBF70416D11EC80A8306957D94E96&osPlatforms=&duComponentIds=C018%7CC015%7CC014%7CC012%7CC013%7CC011%7CC017%7CC010%7CC016&mandatoryCapIds=30%7C62%7C9%7C132%7C42%7C184%7C27&optionalCapIds=30%7C9%7C20%7C26
+| 略称                                | バージョン |
+| ----------------------------------- | ---------- |
+| Red Hat OpenShift                   | 4.8        |
+| Red Hat OpenShift CLI               | 4.8        |
+| IBM Maximo Application Suite        | 8.8.0      |
+| IBM Maximo Manage                   | 8.4.0      |
+| IBM Cloud Pack foundational Service | 3.19.1     |
+| DB2                                 | 11.5       |
+| UDS                                 | 2.0.8      |
+| SLS                                 | 3.4.0      |
 
-| Required software        |  Version |
-| ------------- | ----- |
-Red Hat OpenShift  | 4.6 or 4.8 (新規インストールは 4.8 推奨)
-Service Binding Operator  |  0.8.0 ( OCP4.6 ) , with future 0.8.x and packs<br />1.0.0 ( OCP4.8 ) and future 1.0.x fix packs 
-Cert-manager  | 1.5 and future fix packs
-Behavior Analytics Service | 1.1 and future fix packs
-MongoDB |  4.2 and future fix packs
-IBM Suite License Service  | 3.2 , 3.3	
-IBM Cloud Pak for Data  | 4.0
+## 参考.IBM Maximo Application Suite 8.8 前提ソフトウェア
+Supported software versions
 
+https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=suite-supported-software-versions
 
-各ソフトウェアの採用にあたり詳細な注意事項がある場合があります。										
-MAS Manage 8.3.0のサポート対象となるハードウェア/ソフトウェアバージョンに関しての最新情報や、今回の										
-ガイドで用いない構成に関わるソフトウェアのサポート状況に関しては製品システム要件をご確認ください。
+Compatibility matrix
 
-IBM Maximo Application Suite 8.7.0 system requirements									
-https://www.ibm.com/docs/en/mas87/8.7.0?topic=installation-system-requirements#sysreqs
-							
-										
-IBM Maximo Manage 8.3.0 system requirements	
+https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=suite-compatibility-matrix
 
-https://www.ibm.com/docs/en/maximo-manage/8.3.0?topic=deploy-system-requirements
+各ソフトウェアの採用にあたり詳細な注意事項がある場合がありす。
+サポート対象となるハードウェア/ソフトウェアバージョンに関しての最新情報や、今回のガイドで用いない構成に関わるソフトウェアのサポート状況に関しては製品システム要件をご確認ください。
 
-## 構築の流れ
-MASおよびManageについて、構築の大きな流れは以下の通りです。										
-1. MASの前提ソフトウェアを導入					
-2. MASのインストールと初期セットアップ					
-3. MAS Manage前提のソフトウェアとして、Db2WH導入のため、CP4Dの導入
-4. Db2WHの構築とManage用にセットアップ					
-5. MAS Manageのデプロイ、アクティブ化												
+IBM Maximo Application Requirements and capacity planning  
+https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=suite-requirements-capacity-planning
+
+IBM Maximo Manage system requirements  
+https://www.ibm.com/docs/en/maximo-manage/continuous-delivery?topic=deploy-system-requirements
+
 
 ## 構築手順時間の目安
-| ステップ       |  所要目安時間 |
-| ------------- | ----- |
-01_事前準備  | 2時間
-02_IBM Operator Catalog の追加  |  15分
-03_Service Binding Operator(SBO) のインストール  | 15分
-04_Cert Managermentのインストール | 15分
-05_Behaviour Analytics Service (BAS) のインストール |  1時間
-06_MongoDB のインストール |  1時間
-07_IBM Suite License Service (SLS) のインストール  | 1時間
-08_Maximo Application Suite(MAS) のインストール  | 4時間
-09_IBM CloudPak for Data (CP4D) のインストール  | 2時間
-10_Db2WareHouseのインストールと構成  | 1時間
-11_Manage Operatorのデプロイ  | 30分
-12_永続ボリュームの作成  | 15分
-13_Manageのアクティブ化  | 2時間〜
-14_添付ファイルダウンロードの設定  | 30分
+| ステップ                        | 所要目安時間                      |
+| ------------------------------- | --------------------------------- |
+| 01_事前準備                     | 2時間                             |
+| 02_MASインストール前準備        | 1時間                             |
+| 03_MAS CLIによるMASインストール | 15分,アクティベート完了まで 4時間 |
+| 04_管理者ユーザーの作成         | 1時間                             |
+
 
 ## 参考リンク
-* インストール手順のビデオ
-https://ibm.seismic.com/Link/Content/DCWSlMgL_Rz0iPnxfnsq5W8g
+* インストール手順のビデオ  
+  
+    https://ibm.seismic.com/Link/Content/DCWSlMgL_Rz0iPnxfnsq5W8g
 
 * Ansible を利用したMASインストール自動化
-Ansibleのスキルをお持ちの方は以下を利用してMASのインストールを自動で行うことができます。その場合はこのインストール手順書のような手動設定はほとんど不要となります。ただしAnsibleに関する不明点は自己解決をして頂く必要があります。
+Ansibleのスキルをお持ちの方は以下を利用してMASのインストールを自動で行うことができます。  
+その場合はこのインストール手順書のような手動設定はほとんど不要となります。  
+ただしAnsibleに関する不明点は自己解決をして頂く必要があります。
 
 	https://github.com/ibm-mas/ansible-devops
 
-* IBM Documentation：MAS8.7
+* IBM Documentation：MAS8.8 and later
   
-	https://www.ibm.com/docs/en/mas87
+	https://www.ibm.com/docs/en/mas-cd/continuous-delivery
 
-* Deployment Guide  for Maximo Application Suite
 
-	Business Partner
-
-	https://mam-hol.eu-gb.mybluemix.net/
-
-	IBM社員のみ
-
-	https://pages.github.ibm.com/maximoappsuite/deployment-guide/install/installation/
-
-* IBM Documentation：Manage
+* IBM Documentation：Manage 8.4 and later
   
-	https://www.ibm.com/docs/en/maximo-manage/8.3.0
+	https://www.ibm.com/docs/en/maximo-manage/continuous-delivery
+
+* 前バージョン(MAS8.7/Manage8.3)の構築手順書
+
+	https://github.com/IBM/MAS-install-JP/tree/archive/mas87manage83
 
 * その他リンク集
 
@@ -155,5 +139,53 @@ Ansibleのスキルをお持ちの方は以下を利用してMASのインスト�
 
 	https://maximopro.tumblr.com/
 
-	### 次項
-  [01_事前準備](../main/01_prereqs/index.md)
+	Playbook for Maximo EAM Upgrade
+
+	https://ibm-mas-manage.github.io/playbook/upgrade/deploymentmodel/
+
+	MAS MS Data Sheet
+
+	https://www.ibm.com/software/reports/compatibility/clarity-reports/report/html/softwareReqsForProduct?deliverableId=3F0E2B305E7111EABE1C939145D7672E
+
+	Deployment Guide  for Maximo Application Suite
+
+	https://mam-hol.eu-gb.mybluemix.net/
+
+	MAS Folder @Seismic
+
+	https://ibm.seismic.com/Link/Folder/DC6b9f97
+
+
+	MAS Demo Movie @Seismic
+
+	https://ibm.seismic.com/Link/Folder/DCcdfd8b
+
+
+	MAS お客様向けライセンス・ガイド @Seismic
+
+	https://ibm.seismic.com/Link/Content/DC8fdwbEQVi0-ClDMMN66Elw
+
+
+	MAS Pricing Guide @Seismic
+
+	https://ibm.seismic.com/Link/Content/DCV7TR4HYCgUaD2mrkzrxzAQ
+
+	以下、IBM社員のみ
+
+	https://pages.github.ibm.com/maximoappsuite/deployment-guide/install/installation/
+
+
+	MAS MS Wiki 
+
+	https://github.ibm.com/maximoappsuite/tracker-masms/wiki/Blueline-Assessment#as-a-service-capabilities
+
+	Maximo Performance Wiki
+
+	https://pages.github.ibm.com/maximo/performance-wiki/
+
+	Reset Manage Users Password
+	
+	https://pages.github.ibm.com/maximo/performance-wiki/manage-8/reset-manage-user-password/
+
+### 次項
+- [00_構成と前提](./00_architecture/index.md)
