@@ -1,28 +1,25 @@
-# Maximo Application Suite 8.8/Manage8.4の導入手順書
+# Maximo Application Suite 8.9/Manage8.5の導入手順書
 
 ## 目次
 - [はじめに](#はじめに)
 - [00_構成と前提](00_architecture/index.md)
 - [01_事前準備](01_prereqs/index.md)
-- [02_MASインストール前準備](02_preparation/index.md)
-- [03_MASインストール](03_masinstall/index.md)
+- [02_MASインストール](02_masinstall/index.md)
+- [03_Manageインストール](03_manageinstall/index.md)
 - [04_管理者ユーザーの作成](04_maxadmin/index.md)
 - [05_導入後環境の確認](05_confirm/index.md)
 - [11_参考.Manageの構成変更](11_reactivate/index.md)
+- [12_参考.添付ファイルダウンロードの設定](12_attach/index.md)
 - [50_補足.SQLクライアントの接続](50_dbclient/index.md)
 - [51_補足.DB2インスタンスへのアクセス](51_dbinstance/index.md)
 - [FAQ](90_faq/index.md)
 - [参考.用語解説](99_yougo/index.md)
 ## はじめに
-本資料は、IBM Maximo Application Suite(MAS) 8.8 を Red Hat OpenShift on IBM Cloud (ROKS)上へ導入し、MAS Manage 8.4 のデプロイを行う手順書です。  
-IBM Cloud 上に テストやPoC利用を目的とした Health付きMAS Manage の最小構成の環境構築することを想定しております。
+本資料は、IBM Maximo Application Suite(MAS) 8.9 を Red Hat OpenShift on IBM Cloud (ROKS)上へ導入し、MAS Manage 8.5 のデプロイを行う手順書です。  
+IBM Cloud 上に テストやPoC利用を目的とした MAS Manage の最小構成の環境構築することを想定しております。
 
 
-当手順では、下記の「IBM Maximo Application Suite CLI Utility」を利用し、ansible collectionを利用して導入します。
-
-* IBM Maximo Application Suite CLI Utility
-  	
-	https://github.com/ibm-mas/cli
+当手順では、下記のansible collectionを利用して導入します。
 
 * Ansible collection
 
@@ -37,7 +34,7 @@ MAS Manage のみ導入する場合も以下参照ください。
 
 
 ## 注意事項
-- 当手順は2022年8月に、Maximo Application Suite 8.8/Manage8.4の構築・アクティベーションをTechzoneのROKS環境にて実施した際の作業ログをベースに記述しております。
+- 当手順は2022年12月に、Maximo Application Suite 8.9/Manage8.5の構築・アクティベーションをTechzoneのROKS環境にて実施した際の作業ログをベースに記述しております。
 - 本資料の記載内容は、正式な IBM のテストやレビューを受けておりません。内容について、できる限り正確を期すよう努めておりますが、いかなる明示または暗黙の保証も責任も負いかねます。
 - 本資料の情報は、使用先の責任において使用されるべきものであることを、あらかじめご了承ください
 - 掲載内容は不定期に変更されることもあります。他のメディア等に無断で転載する事はご遠慮ください。
@@ -69,14 +66,13 @@ MAS Manage のみ導入する場合も以下参照ください。
 | ----------------------------------- | ---------- |
 | Red Hat OpenShift                   | 4.8        |
 | Red Hat OpenShift CLI               | 4.8        |
-| IBM Maximo Application Suite        | 8.8.0      |
-| IBM Maximo Manage                   | 8.4.0      |
-| IBM Cloud Pack foundational Service | 3.19.1     |
-| DB2                                 | 11.5       |
+| IBM Maximo Application Suite        | 8.9.0      |
+| IBM Maximo Manage                   | 8.5.0      |
+| IBM Cloud Pack foundational Service | 3.20.1     |
 | UDS                                 | 2.0.8      |
-| SLS                                 | 3.4.0      |
+| SLS                                 | 3.5.0      |
 
-## 参考.IBM Maximo Application Suite 8.8 前提ソフトウェア
+## 参考.IBM Maximo Application Suite 8.9 前提ソフトウェア
 Supported software versions
 
 https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=suite-supported-software-versions
@@ -99,22 +95,15 @@ https://www.ibm.com/docs/en/maximo-manage/continuous-delivery?topic=deploy-syste
 | ステップ                        | 所要目安時間                      |
 | ------------------------------- | --------------------------------- |
 | 01_事前準備                     | 2時間                             |
-| 02_MASインストール前準備        | 1時間                             |
-| 03_MAS CLIによるMASインストール | 15分,アクティベート完了まで 4時間 |
-| 04_管理者ユーザーの作成         | 1時間                             |
+| 02_MASインストール        | 30分、導入完了まで2時間                             |
+| 03_Manageインストール | 15分、アクティベート完了まで 4時間 |
+| 04_管理者ユーザーの作成         | 30分                             |
 
 
 ## 参考リンク
 * インストール手順のビデオ  
   
     https://ibm.seismic.com/Link/Content/DCWSlMgL_Rz0iPnxfnsq5W8g
-
-* Ansible を利用したMASインストール自動化
-Ansibleのスキルをお持ちの方は以下を利用してMASのインストールを自動で行うことができます。  
-その場合はこのインストール手順書のような手動設定はほとんど不要となります。  
-ただしAnsibleに関する不明点は自己解決をして頂く必要があります。
-
-	https://github.com/ibm-mas/ansible-devops
 
 * IBM Documentation：MAS8.8 and later
   
@@ -125,7 +114,15 @@ Ansibleのスキルをお持ちの方は以下を利用してMASのインスト�
   
 	https://www.ibm.com/docs/en/maximo-manage/continuous-delivery
 
-* 前バージョン(MAS8.7/Manage8.3)の構築手順書
+* IBM Maximo Application Suite CLI Utility
+  	
+	https://ibm-mas.github.io/cli/
+
+* 前バージョン(MAS8.7/Manage8.3)の構築手順書 -MAS CLIによるインストール-
+
+	https://github.com/IBM/MAS-install-JP/tree/archive/mas88manage84
+
+* 前バージョン(MAS8.7/Manage8.3)の構築手順書 -手動インストール-
 
 	https://github.com/IBM/MAS-install-JP/tree/archive/mas87manage83
 

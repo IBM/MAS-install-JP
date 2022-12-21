@@ -3,7 +3,7 @@
 ※Windows環境の場合はWSLなどのLinux環境の導入が必要となり、シェルコマンドはLinux環境から実行することになります。  
 WSLの導入手順については[こちら](https://docs.microsoft.com/ja-jp/windows/wsl/setup/environment)を参照してください。
 
-### 1.Techzone ROKS 環境作成手順 - MAS 8.8
+### 1.Techzone ROKS 環境作成手順
 
 Red Hat OpenShift on IBM Cloud 環境を [Techzone](https://techzone.ibm.com/) から作成します。
 
@@ -33,7 +33,7 @@ Red Hat OpenShift on IBM Cloud 環境を [Techzone](https://techzone.ibm.com/) �
    | **Worker Node Count**   | 8                                              |
    | **Worker Node Flavor**  | 16 CPU x 64 GB (300GB Secondary Storage)       |
    | **NFS Size**            | 2 TB                                           |
-   | **OpenShift Version**   | 4.8 (MAS 8.8の場合)                            |
+   | **OpenShift Version**   | 4.8 (本手順の場合。4.8/4.10がサポートバージョン)                            |
 
    ![](2022-04-27-11-29-40.png)
    ![](2022-04-20-08-30-27.png)
@@ -69,57 +69,55 @@ Red Hat OpenShift on IBM Cloud 環境を [Techzone](https://techzone.ibm.com/) �
 
 ### 3.コンテナイメージのダウンロード
 
-下記の手順でコンテナイメージをダウンロードします。  今回は「ibm-mas/cli: 2.1.2」のコンテナを使用しています。  
-このコンテナであれば、MAS8.8とMAS8.7のインストールに成功しています。(2022/8/19時点)
-最新のビルドを利用していただいても構いません。
+下記の手順でコンテナイメージをダウンロードします。  本手順では「ibm-mas/cli: 3.3.0」のコンテナを使用しています。最新のビルドを利用することをおすすめします。
 
 1. https://quay.io/ibmmas/cli にブラウザーでアクセスします。
 
     左の「Tags」タブからコンテナイメージの一覧を表示します。
 
-    ![](3-1-1.png)
+    ![](2022-12-21-10-25-34.png)
 
-2. 「ibm-mas/cli: 2.1.2」のコンテナをチェックして右のダウンロードマークをクリックします。
+2. 「ibm-mas/cli: 3.3.0」のコンテナをチェックして右のダウンロードマークをクリックします。
 
     Podman Pull(by tag)を選択します。
 
-    ![](3-2-1.png)
+    ![](2022-12-21-10-26-28.png)
 
 3. cli実行環境のターミナルにコマンドをペーストして実行します。
 
 
     ```bash
-    masenv@IBM-PF39YTN4:~$ podman pull quay.io/ibmmas/cli:2.1.2
+    masenv@IBM-PF39YTN4:~$ podman pull quay.io/ibmmas/cli:3.3.0
     ```
 
 <details>
 <summary>実行ログ</summary>
 
 ```bash
-masenv@IBM-PF39YTN4:~$ podman pull quay.io/ibmmas/cli:2.1.2
-Trying to pull quay.io/ibmmas/cli:2.1.2...
+MAS-install-JP % podman pull quay.io/ibmmas/cli:3.3.0
+Trying to pull quay.io/ibmmas/cli:3.3.0...
 Getting image source signatures
-Copying blob 1880e99bc671 done
-Copying blob 2f557b52d9c6 done
-Copying blob c00285895a5c done
-Copying blob 0a915135d050 done
-Copying blob b913d1abf24f done
-Copying blob 99a39ffc6054 done
-Copying blob 7f0de1523086 done
-Copying blob b01f7afb8e56 done
-Copying blob 63c22efcd3c2 done
-Copying blob fe91c5d3cd7c done
-Copying blob 1eea09ffb3de done
-Copying blob cd81894a17e0 done
-Copying blob ab87d4cfc977 done
-Copying blob 99069f3a55e5 done
-Copying blob 4faca937f684 done
-Copying blob ff469c7f24df done
-Copying blob 5dcbe75d5c28 done
-Copying config bb65336e27 done
+Copying blob sha256:abad0ae438f5c496ba70df91ab0a61511c12a85d9c3179d99c8a876dec9cf3cc
+Copying blob sha256:713161046dc1e7441023a3d1c6a13fd2a75bc7b88e474e4297d60b00551c941a
+Copying blob sha256:9e96762da6cb35f35e402307856fbff3362b0c6871a0e46501ada462d0451085
+Copying blob sha256:9f0da687ee7b86b7f14c6f94bbc6f094cb1287afc8e037bd44a6896811a7c664
+Copying blob sha256:421b7e0d07adb7fb417a341c86b13c208fd9933a86c1d850976e19f1a40f4b29
+Copying blob sha256:92ce66f764dcd6b27bb521a860bb4ef9bf2bc04a1908710ed6831b0896f984cf
+Copying blob sha256:51ff9f0936afde17a59eac0dda3789057d311c845971b49437bd4351dbdd297b
+Copying blob sha256:d5993b011c495772e0c5a23b3893f8ffa70e1b8e7e80010563ae0381f930773f
+Copying blob sha256:ab87d4cfc9775f23025e4c40beea251d79eaa50b706f36c43496a4990b4727fd
+Copying blob sha256:99069f3a55e56e5d82fe045b3ff4683a873e346e29a3f821c76a0320e2c221f0
+Copying blob sha256:8496ea1f0736c50b4bddddfcc76a9a56d587961a66969e6c4c06005f7c104a77
+Copying blob sha256:e432633c0afabbfb5dba95f0a95528cfe2bf4e1d5eebf50324c38cca88dfc310
+Copying blob sha256:17f82a3a1d05a39fd74887f68d76d731d01310147a71fb7eb6adaf7e7e2d04ff
+Copying blob sha256:5ca33d9c3e9b32df195c61cdedcb014da404ac9c6708f93333271077b59cc404
+Copying blob sha256:27170d1509cc6f04f90e492be0de19db8aad628fc6166980236a43b69edd1aa1
+Copying blob sha256:470ab693e1d2c4192b0c437d9c61126b4c3a482fb10d2830e5dbb8599bc52e15
+Copying config sha256:9423125df1413dc5126292c5c3407b4fe5b794739888575bfdd2b7ccd58ac93e
 Writing manifest to image destination
 Storing signatures
-bb65336e27e4fa45e25f41bf73461bc4b5a61680fe7ee72b19bb1ee4aef797f5
+WARNING: image platform ({amd64 linux  [] }) does not match the expected platform ({arm64 linux  [] })
+9423125df1413dc5126292c5c3407b4fe5b794739888575bfdd2b7ccd58ac93e
 ```
 
 </details>
@@ -128,9 +126,9 @@ bb65336e27e4fa45e25f41bf73461bc4b5a61680fe7ee72b19bb1ee4aef797f5
 4. ダウンロードしたコンテナイメージの確認します。
 
     ```bash
-    masenv@IBM-PF39YTN4:~$ podman images
-    REPOSITORY                     TAG         IMAGE ID      CREATED        SIZE
-    quay.io/ibmmas/cli             2.1.2       bb65336e27e4  8 days ago     1.78 GB
+    MAS-install-JP % podman images
+    REPOSITORY          TAG                IMAGE ID      CREATED       SIZE
+    quay.io/ibmmas/cli  3.3.0              104260da5049  2 weeks ago   2.05 GB
     ```
 
 ### 4.MASライセンスファイルの取得
@@ -222,97 +220,8 @@ IBM Container Library にログインしてEntitlement Keyを取得します。
 3. テキストファイルなどに貼り付けて保存します。
 
 
-### 6.IBM Cloud APIキーの取得
-
-1. 下記にアクセスしてログインします。
-
-    https://cloud.ibm.com
-
-2. 画面上部のメニューより 管理 → アクセス(IAM) を選択します。
-
-    ![](6-2-1.png)
-
-3. APIキーを選択します。
-
-
-4. APIキーが作成されていない場合は、IBM Cloud API キーの作成ボタンをクリックして作成します。
-
-    ![](6-4-1.png)
-
-5. APIキーをコピーします。  
-   
-   APIキーの再表示は不可のため注意してください。
-
-
-6. テキストファイルなどに貼り付けて保存します。
-
-    ![](6-6-1.png)
-
-
-### 7.OCPクラスター名、バージョンの取得
-
-1. 下記にアクセスしてログインします。
-
-    https://cloud.ibm.com
-
-
-2. ご使用のアカウントを選択します。
-
-    ここではTechZONE環境の「ITZ - V2」を選択しています。
-
-
-3. OpenShift → クラスターを開きます。
-
-
-4. クラスターの名前とバージョンをメモします。
-
-    ここでは下記の「クラスター名」(itzroks-2700034gbd-ug2zv49t、「バージョン」(4.8)を控えておきます。
-
-    ![](7-4-1.png)
-
-5. ゾーンをメモします。
-
-    「Datacenter」のtok05などの値は、対象のクラスターをクリックするとその中で「Zone(ゾーン)」として記載されているので控えておきます。
-
-
-### 8.OCP環境情報の取得
-
-OCP環境のServer URLとTokenを取得します。  
-
-Tokenは数分毎で更新されるため、都度最新の値を確認します。
-
-
-1. IBM CloudにログインしてOpenShiftクラスターを開きます。
-
-2. OpenShift Web コンソールボタンをクリックします。
-
-    ![](8-2-1.png)
-
-3. 画面左上メニューからCopy login command を開きます。
-
-    ![](8-3-1.png)
-
-
-4. Display Tokenのリンクをクリックします。
-
-    ![](8-4-1.png)
-
-5. Server URLとAPI tokenをメモしておきます。
-
-
-   | 項目           | 値                                                   |
-   | -------------- | ---------------------------------------------------- |
-   | **Server URL** | https://c115-e.jp-tok.containers.cloud.ibm.com:32726 |
-   | **API token**  | sha256~uXQGjIu-EfltVtTiVmeYO8lDiwatVQpXkglXXXXXXXX   |
-
-    
-
-    Server URlとAPI Tokenの例：
-    ![](8-5-1.png)
-
-
 ### 前項
 - [ 00_構成と前提 ](../00_architecture/index.md)
 
 ### 次項
-- [ 02_MASインストール前準備 ](../02_preparation/index.md)
+- [ 02_MASインストール ](../02_masinstall/index.md)
