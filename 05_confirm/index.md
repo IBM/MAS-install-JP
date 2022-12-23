@@ -42,4 +42,4 @@
 - [ 04_管理者ユーザーの作成 ](../04_maxadmin/index.md)
 
 ### 次項
-- [ 10_参考:デモデータの導入(今後更新予定) ](../10_demodata/index.md)
+- [ 11_参考:Manageの構成変更](../11_reactivate/index.md)

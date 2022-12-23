@@ -105,7 +105,7 @@ MAS install中に作成されたsuperuserを使って、manage管理者ユーザ
    一度superuserをログアウトして、設定したパスワードを使用してmaxadminでログインすることができれば設定は完了です。
 
 ### 前項
-- [ 03_MASのインストール ](../03_masinstall/index.md)
+- [ 03_Manageインストール ](../03_manageinstall/index.md)
 
 ### 次項
 - [ 05_導入後環境の確認 ](../05_confirm/index.md)
